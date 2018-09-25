@@ -2,27 +2,32 @@ package com.bitnovisad.rvwexample.main.presenter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bitnovisad.rvwexample.R;
 import com.bitnovisad.rvwexample.main.model.Player;
+import com.bitnovisad.rvwexample.main.view.PlayerDetailsFragment;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static com.bitnovisad.rvwexample.R.layout.custom_row;
+public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.MyViewHolder> implements IntViewAdapter {
 
-public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.MyViewHolder> {
-
+    private ViewAdapter vAdapter;
     private LayoutInflater inflater;
     //data for players
     List<Player> data = Collections.emptyList();
+
+//    public ViewAdapter(ViewAdapter vAdapter) {
+//        this.vAdapter = vAdapter;
+//    }
 
     //step 6.
     public ViewAdapter(Context context, List<Player> data) {
@@ -44,17 +49,28 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.MyViewHolder> 
 
     //this method fill items with data
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
-        Player current = data.get(position);
+        final Player current = data.get(position);
         holder.pictPlayer.setImageResource(current.playerImage);
         holder.namePlayer.setText(current.playerName);
+
+        //handlig click events on player image
+        holder.pictPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),"Opening details for " + position, Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return data.size();
     }
+
+
 
     //ne znam sta je ovo???
     class MyViewHolder extends RecyclerView.ViewHolder{
@@ -64,10 +80,8 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.MyViewHolder> 
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
             pictPlayer = itemView.findViewById(R.id.playerImage);
             namePlayer = itemView.findViewById(R.id.playerName);
-
         }
     }
 }

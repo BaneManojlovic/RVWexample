@@ -1,5 +1,6 @@
 package com.bitnovisad.rvwexample.main.view;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +13,7 @@ import com.bitnovisad.rvwexample.main.presenter.ViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IntMainActivity{
 
     private RecyclerView recView;
     private ViewAdapter adapter;
@@ -53,4 +54,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return data;
     }
+
+
 }
